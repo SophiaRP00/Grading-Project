@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+credits = "Created by Adam(s224202), Gunnar(s183737) and Sophia(s224222)"
+
 #######################################################
 ### Function for loading data from a csv file       ###
 ### By using Pandas library                         ###
@@ -46,4 +48,36 @@ def main():
     print(roundGrade(6.3))
     grades = np.array([1.2, 3.4, 5.6, 7.8, 9.0, 11.2, 13.4])
     gradesPlot(grades)
+
+    while True:
+        print("Welcome to the Grading Program \n")
+        print( "MENU \n")
+        print("Please choose one of the following options: \n")
+        print("1. Load New Data \n")
+        print("2. Check for Data Erros \n")
+        print("3. Generate Plots \n")
+        print("4. Display list of grades \n")
+        print("5. Quit \n")
+
+        choice = input("Your choice: ")
+
+        if choice == "1":
+            print("Load New Data \n")
+            filename = input("Please enter the name of the file: ")
+            dataLoad(filename)
+            print("Data loaded (◕ᴥ◕ʋ)\n")
+        
+        elif choice == "2":
+            print 
+        elif choice == "3":
+            print 
+        elif choice == "4":
+            print 
+        elif choice == "5":
+            if input("Are you certain you want to quit now? [y/n]\n") == "y":
+                print(credits)
+                break 
+            else:
+                print("Returning to main menu \n")
+            
 main()
