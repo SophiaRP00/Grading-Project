@@ -2,6 +2,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#######################################################
+### Function for loading data from a csv file       ###
+### By using Pandas library                         ###
+### Returning grades for each person into an array  ###
+#######################################################
+
 def dataLoad(filename):
     filename = pd.read_csv('grade.csv')
     return filename.to_numpy()[:,2:]
