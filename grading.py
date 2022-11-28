@@ -1,12 +1,28 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
+def dataLoad(filename):
+    filename = pd.read_csv('grade.csv')
+    return filename.to_numpy()[:,2:]
+
 def roundGrade(grades):
-    grades = np.round(grades)
+    legalGrades = [-3, 0, 2, 4, 7, 10, 12]
+    return legalGrades[np.argmin(np.abs(np.array(legalGrades) - grades))]
+
 
     return grades
 
 def computeFinalGrades(grades):
+    finalGrades = np.zeros(grades.shape[0])
+    for i, studentGrades in enumerate(grades):
+        if studentGrades.size() == 1:
+            finalGrades[i] = studentGrades[0]
+        elif -3 in studentGrades:
+            finalGrades[i] = -3
+        else:
+            studentGrades = np.sort(studentGrades)
+            finalGrades[i] = roundGrade(np.mean(studentGrades[1:]))
     return 0
 def gradesPlot(grades):
     FinalGrades = computeFinalGrades(grades)
@@ -21,7 +37,7 @@ def gradesPlot(grades):
 
 
 def main():
-    print("hey")
+    print(roundGrade(6.3))
     grades = np.array([1.2, 3.4, 5.6, 7.8, 9.0, 11.2, 13.4])
     gradesPlot(grades)
 main()
