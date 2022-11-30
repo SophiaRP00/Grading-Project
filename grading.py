@@ -10,9 +10,15 @@ credits = "Created by Adam(s224202), Gunnar(s183737) and Sophia(s224222)"
 ### Returning grades for each person into an array  ###
 #######################################################
 
+#Sophia
 def dataLoad(filename):
-    filename = pd.read_csv('grade.csv')
-    return filename.to_numpy()[:,2:]
+    try:
+        data = pd.read_csv(filename)    
+        return data.to_numpy()
+    except:
+        print("Error: File not found (◕︵◕✿)\n")
+        print("Please try again \n")
+        return dataLoad(input("Please enter the name of the file: "))
 
 # Adam
 def roundGrade(grades):
@@ -23,7 +29,7 @@ def roundGrade(grades):
 def computeFinalGrades(grades):
     finalGrades = np.zeros(grades.shape[0])
     for i, studentGrades in enumerate(grades):
-        if studentGrades.size() == 1:
+        if studentGrades.size == 1:
             finalGrades[i] = studentGrades[0]
         elif -3 in studentGrades:
             finalGrades[i] = -3
@@ -32,6 +38,7 @@ def computeFinalGrades(grades):
             finalGrades[i] = roundGrade(np.mean(studentGrades[1:]))
     return finalGrades
 
+#Gunnar
 def gradesPlot(grades):
 
 #################################
@@ -44,7 +51,7 @@ def gradesPlot(grades):
     xgrades = np.array([1,3,5,7,9,11,13])
     ygrades = np.array([len(FinalGrades[FinalGrades == -3]),len(FinalGrades[FinalGrades == 0]),len(FinalGrades[FinalGrades == 2]),len(FinalGrades[FinalGrades == 4]),len(FinalGrades[FinalGrades == 7]),len(FinalGrades[FinalGrades == 10]),len(FinalGrades[FinalGrades == 12])])
     plt.xticks(xgrades, ('-3', '0', '2', '4', '7', '10', '12'))
-    plt.bar(xgrades,ygrades)
+    plot1 = plt.bar(xgrades,ygrades)
     plt.xlabel('grades')
     plt.ylabel('Occurences')
     plt.title('Final Grades')
@@ -86,37 +93,24 @@ def gradesPlot(grades):
 ### so we only decided to detect them      ###
 ##############################################
 
+#Adam
 def detectErrors(data):
     studentids = data[:,0]
     foundStudentids = []
+    #####################################################
+    ### Checking if student id appears multiple times ###
+    ### Printing message to user                      ###
+    #####################################################
     for studentid in studentids:
         if not studentid in foundStudentids:
             foundStudentids.append(studentid)
         else:
             print(f"Duplicate student id: {studentid}")
-    legalGrades = [-3, 0, 2, 4, 7, 10, 12]
-    for studentGrades in data[:,2:]:
-        for grade in studentGrades:
-            if not grade in legalGrades:
-                print(f"Illegal grade: {grade}")
-
-#####################################################
-### Checking if student id appears multiple times ###
-### Printing message to user                      ###
-#####################################################
-
-    for studentid in studentids:
-        if not studentid in foundStudentids:
-            foundStudentids.append(studentid)
-        else:
-            print(f"Duplicate student id: {studentid}")
-
 ###############################################
 ### Checking if grades are legal            ###
 ### according to the 7 point grading scale  ###
 ### If not printing message to user         ###
 ###############################################
-
     legalGrades = [-3, 0, 2, 4, 7, 10, 12]
     for studentGrades in data[:,2:]:
         for grade in studentGrades:
@@ -131,6 +125,7 @@ def displayGrades(fulldata):
 
 #Sophia and Gunnar
 def main():
+    loaded = False
     while True:
         print("Welcome to the Grading Program \n")
         print(credits)
@@ -143,7 +138,6 @@ def main():
         print("5. Quit \n")
 
         choice = input("Your choice: ")
-        loaded = False
 ######################################
 ### If user enters value 1         ###
 ### Loading data from csv file     ###
@@ -154,16 +148,12 @@ def main():
         if choice == "1":
             print("Load New Data \n")
             filename = input("Please enter the name of the file: ")
-            try:
-                fulldata = dataLoad(filename)
-                grades = fulldata[:,2:]
-                loaded = True
-                print("Data loaded succesfully (◕ᴥ◕ʋ)\n")
-                print("Number of students: ", len(grades))
-                print("Number of assignments: ", len(grades[0]))
-            except:
-                print("Error: File not found (◕︵◕✿)\n")
-                print("Please try again \n")
+            fulldata = dataLoad(filename)
+            grades = fulldata[:,2:]
+            loaded = True
+            print("Data loaded succesfully (◕ᴥ◕ʋ)\n")
+            print("Number of students: ", len(grades))
+            print("Number of assignments: ", len(grades[0]))
         
         elif choice == "2" and loaded:
             detectErrors(fulldata)
