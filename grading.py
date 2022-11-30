@@ -12,14 +12,11 @@ credits = "Created by Adam(s224202), Gunnar(s183737) and Sophia(s224222)"
 
 def dataLoad(filename):
     filename = pd.read_csv('grade.csv')
-    return filename.to_numpy()[:,2:]
+    return filename.to_numpy()
 
 def roundGrade(grades):
     legalGrades = [-3, 0, 2, 4, 7, 10, 12]
     return legalGrades[np.argmin(np.abs(np.array(legalGrades) - grades))]
-
-
-    return grades
 
 def computeFinalGrades(grades):
     finalGrades = np.zeros(grades.shape[0])
@@ -43,12 +40,23 @@ def gradesPlot(grades):
     plt.title('Final Grades')
     plt.show()
 
+# There is no requirement that errors are removed from the data, so we only decided to detect them
+def detectErrors(data):
+    studentids = data[:,0]
+    foundStudentids = []
+    for studentid in studentids:
+        if not studentid in foundStudentids:
+            foundStudentids.append(studentid)
+        else:
+            print(f"Duplicate student id: {studentid}")
+    legalGrades = [-3, 0, 2, 4, 7, 10, 12]
+    for studentGrades in data[:,2:]:
+        for grade in studentGrades:
+            if not grade in legalGrades:
+                print(f"Illegal grade: {grade}")
+
 
 def main():
-    print(roundGrade(6.3))
-    grades = np.array([1.2, 3.4, 5.6, 7.8, 9.0, 11.2, 13.4])
-    gradesPlot(grades)
-
     while True:
         print("Welcome to the Grading Program \n")
         print( "MENU \n")
@@ -64,11 +72,12 @@ def main():
         if choice == "1":
             print("Load New Data \n")
             filename = input("Please enter the name of the file: ")
-            dataLoad(filename)
+            fulldata = dataLoad(filename)
+            grades = fulldata[:,2:]
             print("Data loaded (◕ᴥ◕ʋ)\n")
         
         elif choice == "2":
-            print 
+            detectErrors(fulldata)
         elif choice == "3":
             print 
         elif choice == "4":
