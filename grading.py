@@ -59,6 +59,7 @@ def detectErrors(data):
 def main():
     while True:
         print("Welcome to the Grading Program \n")
+        print(credits)
         print( "MENU \n")
         print("Please choose one of the following options: \n")
         print("1. Load New Data \n")
@@ -69,13 +70,24 @@ def main():
 
         choice = input("Your choice: ")
 
-        if choice == "1":
-            print("Load New Data \n")
-            filename = input("Please enter the name of the file: ")
-            fulldata = dataLoad(filename)
-            grades = fulldata[:,2:]
-            print("Data loaded (◕ᴥ◕ʋ)\n")
-        
+######################################
+### If user enters value 1         ###
+### Loading data from csv file     ###
+### And checking if valid filename ###
+### By using try and except        ###
+### Prints error message if wrong  ###
+######################################
+
+            try:
+                fulldata = dataLoad(filename)
+                grades = fulldata[:,2:]
+                print("Data loaded succesfully (◕ᴥ◕ʋ)\n")
+                print("Number of students: ", len(grades))
+                print("Number of assignments: ", len(grades[0]))
+            except:
+                print("Error: File not found (◕︵◕✿)\n")
+                print("Please try again \n")
+            
         elif choice == "2":
             detectErrors(fulldata)
         elif choice == "3":
