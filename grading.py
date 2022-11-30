@@ -11,8 +11,8 @@ credits = "Created by Adam(s224202), Gunnar(s183737) and Sophia(s224222)"
 #######################################################
 
 def dataLoad(filename):
-    data = pd.read_csv(filename)
-    return data.to_numpy()[:,2:]
+    grades = pd.read_csv(filename)
+    return grades.to_numpy()[:,2:]
 
 def roundGrade(grades):
     legalGrades = [-3, 0, 2, 4, 7, 10, 12]
@@ -21,14 +21,14 @@ def roundGrade(grades):
 def computeFinalGrades(grades):
     finalGrades = np.zeros(grades.shape[0])
     for i, studentGrades in enumerate(grades):
-        if studentGrades.size() == 1:
+        if studentGrades.size == 1:
             finalGrades[i] = studentGrades[0]
         elif -3 in studentGrades:
             finalGrades[i] = -3
         else:
             studentGrades = np.sort(studentGrades)
             finalGrades[i] = roundGrade(np.mean(studentGrades[1:]))
-    return 0
+    return finalGrades
 def gradesPlot(grades):
     FinalGrades = computeFinalGrades(grades)
     xgrades = np.array([1,3,5,7,9,11,13])
@@ -36,9 +36,34 @@ def gradesPlot(grades):
     plt.xticks(xgrades, ('-3', '0', '2', '4', '7', '10', '12'))
     plt.bar(xgrades,ygrades)
     plt.xlabel('grades')
-    plt.ylabel('Final Grades')
+    plt.ylabel('Occurences')
     plt.title('Final Grades')
     plt.show()
+    
+    GradesperAssignment = np.zeros((grades.shape[1],grades.shape[0]))
+    for i, studentGrades in enumerate(grades):
+        for j, assignmentGrades in enumerate(studentGrades):
+            GradesperAssignment[j,i] = assignmentGrades
+    x = []
+    y=[]
+    Assignmentmeans=[]
+    Assignments=[]
+    for i, assignment in enumerate(GradesperAssignment):
+        Assignmentmeans.append(np.mean(assignment))
+        Assignments.append(i+1)
+        for grade in assignment:
+            x.append(1+i+np.random.uniform(-0.1,0.1))
+            y.append(grade+np.random.uniform(-0.1,0.1))
+    plt.scatter(x,y)
+    plt.plot(Assignments,Assignmentmeans,color='turquoise')
+    plt.xlabel('Assignments')
+    plt.ylabel('Grades')
+    plt.title('Grades per Assignment')
+    plt.show()
+    
+    
+
+
 
 ##############################################
 ### There is no requirement                ###
