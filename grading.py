@@ -40,15 +40,33 @@ def gradesPlot(grades):
     plt.title('Final Grades')
     plt.show()
 
-# There is no requirement that errors are removed from the data, so we only decided to detect them
+##############################################
+### There is no requirement                ###
+### that errors are removed from the data, ###
+### so we only decided to detect them      ###
+##############################################
+
 def detectErrors(data):
     studentids = data[:,0]
     foundStudentids = []
+
+#####################################################
+### Checking if student id appears multiple times ###
+### Printing message to user                      ###
+#####################################################
+
     for studentid in studentids:
         if not studentid in foundStudentids:
             foundStudentids.append(studentid)
         else:
             print(f"Duplicate student id: {studentid}")
+
+###############################################
+### Checking if grades are legal            ###
+### according to the 7 point grading scale  ###
+### If not printing message to user         ###
+###############################################
+
     legalGrades = [-3, 0, 2, 4, 7, 10, 12]
     for studentGrades in data[:,2:]:
         for grade in studentGrades:
