@@ -77,7 +77,9 @@ def main():
 ### By using try and except        ###
 ### Prints error message if wrong  ###
 ######################################
-
+        if choice == "1":
+            print("Load New Data \n")
+            filename = input("Please enter the name of the file: ")
             try:
                 fulldata = dataLoad(filename)
                 grades = fulldata[:,2:]
