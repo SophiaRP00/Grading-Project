@@ -31,6 +31,7 @@ def computeFinalGrades(grades):
             studentGrades = np.sort(studentGrades)
             finalGrades[i] = roundGrade(np.mean(studentGrades[1:]))
     return finalGrades
+
 def gradesPlot(grades):
     FinalGrades = computeFinalGrades(grades)
     xgrades = np.array([1,3,5,7,9,11,13])
@@ -41,7 +42,6 @@ def gradesPlot(grades):
     plt.ylabel('Occurences')
     plt.title('Final Grades')
     plt.show()
-
     GradesperAssignment = np.zeros((grades.shape[1],grades.shape[0]))
     for i, studentGrades in enumerate(grades):
         for j, assignmentGrades in enumerate(studentGrades):
@@ -76,6 +76,16 @@ def gradesPlot(grades):
 def detectErrors(data):
     studentids = data[:,0]
     foundStudentids = []
+    for studentid in studentids:
+        if not studentid in foundStudentids:
+            foundStudentids.append(studentid)
+        else:
+            print(f"Duplicate student id: {studentid}")
+    legalGrades = [-3, 0, 2, 4, 7, 10, 12]
+    for studentGrades in data[:,2:]:
+        for grade in studentGrades:
+            if not grade in legalGrades:
+                print(f"Illegal grade: {grade}")
 
 #####################################################
 ### Checking if student id appears multiple times ###
