@@ -11,8 +11,8 @@ credits = "Created by Adam(s224202), Gunnar(s183737) and Sophia(s224222)"
 #######################################################
 
 def dataLoad(filename):
-    filename = pd.read_csv('grade.csv')
-    return filename.to_numpy()
+    data = pd.read_csv(filename)
+    return data.to_numpy()[:,2:]
 
 def roundGrade(grades):
     legalGrades = [-3, 0, 2, 4, 7, 10, 12]
@@ -100,7 +100,5 @@ def main():
             if input("Are you certain you want to quit now? [y/n]\n") == "y":
                 print(credits)
                 break 
-            else:
-                print("Returning to main menu \n")
             
 main()
