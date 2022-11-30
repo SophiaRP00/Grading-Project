@@ -55,6 +55,11 @@ def detectErrors(data):
             if not grade in legalGrades:
                 print(f"Illegal grade: {grade}")
 
+def displayGrades(fulldata):
+    sortedGrades = fulldata[fulldata[:,1].argsort()]
+    for student in sortedGrades:
+        print(f"{student[1]}, Grades: {student[2:]}, Final grade: {np.mean(student[2:]) if -3 not in student[2:] else -3}")
+
 
 def main():
     while True:
@@ -62,7 +67,7 @@ def main():
         print( "MENU \n")
         print("Please choose one of the following options: \n")
         print("1. Load New Data \n")
-        print("2. Check for Data Erros \n")
+        print("2. Check for Data Errors \n")
         print("3. Generate Plots \n")
         print("4. Display list of grades \n")
         print("5. Quit \n")
@@ -81,7 +86,7 @@ def main():
         elif choice == "3":
             print 
         elif choice == "4":
-            print 
+            displayGrades(fulldata)
         elif choice == "5":
             if input("Are you certain you want to quit now? [y/n]\n") == "y":
                 print(credits)
