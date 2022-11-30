@@ -2,6 +2,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+credits = "Created by Adam(s224202), Gunnar(s183737) and Sophia(s224222)"
+
+#######################################################
+### Function for loading data from a csv file       ###
+### By using Pandas library                         ###
+### Returning grades for each person into an array  ###
+#######################################################
+
 def dataLoad(filename):
     grades = pd.read_csv(filename)
     return grades.to_numpy()[:,2:]
@@ -57,8 +65,83 @@ def gradesPlot(grades):
 
 
 
+##############################################
+### There is no requirement                ###
+### that errors are removed from the data, ###
+### so we only decided to detect them      ###
+##############################################
+
+def detectErrors(data):
+    studentids = data[:,0]
+    foundStudentids = []
+
+#####################################################
+### Checking if student id appears multiple times ###
+### Printing message to user                      ###
+#####################################################
+
+    for studentid in studentids:
+        if not studentid in foundStudentids:
+            foundStudentids.append(studentid)
+        else:
+            print(f"Duplicate student id: {studentid}")
+
+###############################################
+### Checking if grades are legal            ###
+### according to the 7 point grading scale  ###
+### If not printing message to user         ###
+###############################################
+
+    legalGrades = [-3, 0, 2, 4, 7, 10, 12]
+    for studentGrades in data[:,2:]:
+        for grade in studentGrades:
+            if not grade in legalGrades:
+                print(f"Illegal grade: {grade}")
+
 
 def main():
-    grades = dataLoad('grade.csv')
-    gradesPlot(grades)
+    while True:
+        print("Welcome to the Grading Program \n")
+        print(credits)
+        print( "MENU \n")
+        print("Please choose one of the following options: \n")
+        print("1. Load New Data \n")
+        print("2. Check for Data Erros \n")
+        print("3. Generate Plots \n")
+        print("4. Display list of grades \n")
+        print("5. Quit \n")
+
+        choice = input("Your choice: ")
+
+######################################
+### If user enters value 1         ###
+### Loading data from csv file     ###
+### And checking if valid filename ###
+### By using try and except        ###
+### Prints error message if wrong  ###
+######################################
+        if choice == "1":
+            print("Load New Data \n")
+            filename = input("Please enter the name of the file: ")
+            try:
+                fulldata = dataLoad(filename)
+                grades = fulldata[:,2:]
+                print("Data loaded succesfully (◕ᴥ◕ʋ)\n")
+                print("Number of students: ", len(grades))
+                print("Number of assignments: ", len(grades[0]))
+            except:
+                print("Error: File not found (◕︵◕✿)\n")
+                print("Please try again \n")
+            
+        elif choice == "2":
+            detectErrors(fulldata)
+        elif choice == "3":
+            print 
+        elif choice == "4":
+            print 
+        elif choice == "5":
+            if input("Are you certain you want to quit now? [y/n]\n") == "y":
+                print(credits)
+                break 
+            
 main()
