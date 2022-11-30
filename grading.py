@@ -33,6 +33,13 @@ def computeFinalGrades(grades):
     return finalGrades
 
 def gradesPlot(grades):
+
+#################################
+### Plots bar of final grades ###
+### Using Matplotlib library  ###
+### Labeling x and y axis     ###
+#################################
+
     FinalGrades = computeFinalGrades(grades)
     xgrades = np.array([1,3,5,7,9,11,13])
     ygrades = np.array([len(FinalGrades[FinalGrades == -3]),len(FinalGrades[FinalGrades == 0]),len(FinalGrades[FinalGrades == 2]),len(FinalGrades[FinalGrades == 4]),len(FinalGrades[FinalGrades == 7]),len(FinalGrades[FinalGrades == 10]),len(FinalGrades[FinalGrades == 12])])
@@ -42,6 +49,16 @@ def gradesPlot(grades):
     plt.ylabel('Occurences')
     plt.title('Final Grades')
     plt.show()
+
+    ####################################################
+    ### Plots scatter plot                           ###
+    ### Using Matplotlib library                     ###
+    ### Labeling x and y axis                        ###
+    ### Creating assignment mean for average grading ###
+    ### With the use of numpy random & uniform       ###
+    ####################################################
+
+    
     GradesperAssignment = np.zeros((grades.shape[1],grades.shape[0]))
     for i, studentGrades in enumerate(grades):
         for j, assignmentGrades in enumerate(studentGrades):
@@ -62,10 +79,6 @@ def gradesPlot(grades):
     plt.ylabel('Grades')
     plt.title('Grades per Assignment')
     plt.show()
-    
-    
-
-
 
 ##############################################
 ### There is no requirement                ###
