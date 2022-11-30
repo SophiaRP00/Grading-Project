@@ -21,11 +21,17 @@ def dataLoad(filename):
         return dataLoad(input("Please enter the name of the file: "))
 
 # Adam
+################################################
+### Rounds the grades to nearest legal value ###
+################################################
 def roundGrade(grades):
     legalGrades = [-3, 0, 2, 4, 7, 10, 12]
     return legalGrades[np.argmin(np.abs(np.array(legalGrades) - grades))]
 
 #Adam
+################################################
+### Calculates correct grade for each person ###
+################################################
 def computeFinalGrades(grades):
     finalGrades = np.zeros(grades.shape[0])
     for i, studentGrades in enumerate(grades):
@@ -118,12 +124,23 @@ def detectErrors(data):
                 print(f"Illegal grade: {grade}")
 
 #Adam
+###############################################
+### Displays an alaphabetically sorted list ###
+### of all students and their final grades  ###
+###############################################
 def displayGrades(fulldata):
     sortedGrades = fulldata[fulldata[:,1].argsort()]
     for student in sortedGrades:
         print(f"{student[1]}, Grades: {student[2:]}, Final grade: {np.mean(student[2:]) if -3 not in student[2:] else -3}")
 
 #Sophia and Gunnar
+############################################
+### Main function                        ###
+### Prints menu & credits                ###
+### User inputs choice                   ###
+### Calls functions depending on choices ###
+############################################
+
 def main():
     loaded = False
     while True:
