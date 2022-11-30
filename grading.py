@@ -120,7 +120,7 @@ def main():
         print("5. Quit \n")
 
         choice = input("Your choice: ")
-
+        loaded = False
 ######################################
 ### If user enters value 1         ###
 ### Loading data from csv file     ###
@@ -132,8 +132,9 @@ def main():
             print("Load New Data \n")
             filename = input("Please enter the name of the file: ")
             try:
-            fulldata = dataLoad(filename)
-            grades = fulldata[:,2:]
+                fulldata = dataLoad(filename)
+                grades = fulldata[:,2:]
+                loaded = True
                 print("Data loaded succesfully (◕ᴥ◕ʋ)\n")
                 print("Number of students: ", len(grades))
                 print("Number of assignments: ", len(grades[0]))
