@@ -18,9 +18,6 @@ def roundGrade(grades):
     legalGrades = [-3, 0, 2, 4, 7, 10, 12]
     return legalGrades[np.argmin(np.abs(np.array(legalGrades) - grades))]
 
-
-    return grades
-
 def computeFinalGrades(grades):
     finalGrades = np.zeros(grades.shape[0])
     for i, studentGrades in enumerate(grades):
@@ -43,12 +40,23 @@ def gradesPlot(grades):
     plt.title('Final Grades')
     plt.show()
 
+# There is no requirement that errors are removed from the data, so we only decided to detect them
+def detectErrors(data):
+    studentids = data[:,0]
+    foundStudentids = []
+    for studentid in studentids:
+        if not studentid in foundStudentids:
+            foundStudentids.append(studentid)
+        else:
+            print(f"Duplicate student id: {studentid}")
+    legalGrades = [-3, 0, 2, 4, 7, 10, 12]
+    for studentGrades in data[:,2:]:
+        for grade in studentGrades:
+            if not grade in legalGrades:
+                print(f"Illegal grade: {grade}")
+
 
 def main():
-    print(roundGrade(6.3))
-    grades = np.array([1.2, 3.4, 5.6, 7.8, 9.0, 11.2, 13.4])
-    gradesPlot(grades)
-
     while True:
         print("Welcome to the Grading Program \n")
         print(credits)
@@ -69,12 +77,12 @@ def main():
 ### By using try and except        ###
 ### Prints error message if wrong  ###
 ######################################
-
         if choice == "1":
             print("Load New Data \n")
             filename = input("Please enter the name of the file: ")
             try:
-                dataLoad(filename)
+                fulldata = dataLoad(filename)
+                grades = fulldata[:,2:]
                 print("Data loaded succesfully (◕ᴥ◕ʋ)\n")
                 print("Number of students: ", len(grades))
                 print("Number of assignments: ", len(grades[0]))
@@ -83,7 +91,7 @@ def main():
                 print("Please try again \n")
             
         elif choice == "2":
-            print 
+            detectErrors(fulldata)
         elif choice == "3":
             print 
         elif choice == "4":
