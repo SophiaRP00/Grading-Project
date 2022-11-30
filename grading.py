@@ -92,7 +92,5 @@ def main():
             if input("Are you certain you want to quit now? [y/n]\n") == "y":
                 print(credits)
                 break 
-            else:
-                print("Returning to main menu \n")
             
 main()
